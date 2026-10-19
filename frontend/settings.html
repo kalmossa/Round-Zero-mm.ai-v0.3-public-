@@ -1,0 +1,788 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Settings - MM.AI</title>
+    <meta name="description" content="MM.AI settings - theme, account preferences.">
+    <script>
+        // Bootstrap theme avant le premier paint pour eviter le flash
+        (function () {
+            try {
+                var t = localStorage.getItem("mmai-theme");
+                if (t === "light") document.documentElement.setAttribute("data-theme", "light");
+            } catch (e) {}
+        })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.5.0/css/flag-icons.min.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body class="settings-body">
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark"><span>M</span></span>
+                <span class="brand-text">MM<span class="dot">.</span>AI</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="rankings.html" data-i18n="nav.rankings">Rankings</a>
+                <a href="fighters.html" data-i18n="nav.fighters">Fighters</a>
+                <a href="divisions.html" data-i18n="nav.divisions">Divisions</a>
+                <a href="compare.html" data-i18n="nav.compare">Compare</a>
+                <a href="matchmaking.html" class="accent-link" data-i18n="nav.matchmaking">Matchmaking</a>
+                <a href="analytics.html" data-i18n="nav.analytics">Analytics</a>
+                <a href="methodology.html" data-i18n="nav.methodology">Methodology</a>
+                <a href="faq.html" data-i18n="nav.faq">FAQ</a>
+            </nav>
+            <div class="nav-search">
+                <input type="search" id="nav-search" placeholder="Search a fighter..." data-i18n-placeholder="nav.search" autocomplete="off">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="section">
+                <div class="section-head">
+                    <h2 data-i18n="settings.title">Settings</h2>
+                </div>
+                <p class="section-sub" data-i18n="settings.sub">General preferences, theme and account.</p>
+
+                <div class="settings-layout">
+                    <aside class="settings-side">
+                        <h4 data-i18n="settings.sections_header">Sections</h4>
+                        <a href="#general" class="active" data-i18n="settings.general">General</a>
+                        <a href="#appearance" data-i18n="settings.appearance">Appearance</a>
+                        <a href="#profile" data-i18n="settings.profile_photo">Profile photo</a>
+                        <a href="#notifications" data-i18n="settings.notifications">Notifications</a>
+                        <a href="#privacy" data-i18n="settings.privacy">Privacy</a>
+                        <a href="#account" data-i18n="settings.account">Account</a>
+                        <a href="#about" data-i18n="settings.about">About</a>
+                    </aside>
+
+                    <div class="settings-main">
+
+                        <!-- General -->
+                        <div id="general" class="settings-section">
+                            <div class="settings-section-head">
+                                <h2 data-i18n="settings.general">General</h2>
+                                <p data-i18n="settings.general_desc">Basic preferences for your MM.AI experience.</p>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.lang_label">Language</div>
+                                    <div class="settings-row-desc" data-i18n="settings.lang_desc">Interface language for MM.AI.</div>
+                                </div>
+                                <div>
+                                    <select id="lang-select" style="background:var(--bg-elev-2); color:var(--text); border:1px solid var(--border); border-radius:var(--radius-sm); padding:6px 10px; cursor:pointer; font-size:14px;">
+                                        <option value="en">English</option>
+                                        <option value="fr">Français</option>
+                                        <option value="es">Español</option>
+                                        <option value="zh">中文</option>
+                                        <option value="pt">Português</option>
+                                        <option value="de">Deutsch</option>
+                                        <option value="ru">Русский</option>
+                                        <option value="ar">العربية</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.units_label">Units</div>
+                                    <div class="settings-row-desc" data-i18n="settings.units_desc">Height and reach shown in inches or centimeters.</div>
+                                </div>
+                                <div class="seg-control" id="units-seg">
+                                    <button type="button" data-units-set="imperial" data-i18n="settings.units_imperial">Inches</button>
+                                    <button type="button" data-units-set="metric" data-i18n="settings.units_metric">Centimeters</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Appearance -->
+                        <div id="appearance" class="settings-section">
+                            <div class="settings-section-head">
+                                <h2 data-i18n="settings.appearance">Appearance</h2>
+                                <p data-i18n="settings.appearance_desc">Choose how MM.AI looks on your device.</p>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.theme_label">Theme</div>
+                                    <div class="settings-row-desc" data-i18n="settings.theme_desc">Switch between dark (default) and light mode. Saved on this device.</div>
+                                </div>
+                                <div class="theme-toggle" id="theme-toggle">
+                                    <button type="button" data-theme-set="dark">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                                        </svg>
+                                        <span data-i18n="settings.dark">Dark</span>
+                                    </button>
+                                    <button type="button" data-theme-set="light">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="4"></circle>
+                                            <line x1="12" y1="2"  x2="12" y2="4"></line>
+                                            <line x1="12" y1="20" x2="12" y2="22"></line>
+                                            <line x1="4.93" y1="4.93"  x2="6.34"  y2="6.34"></line>
+                                            <line x1="17.66" y1="17.66" x2="19.07" y2="19.07"></line>
+                                            <line x1="2" y1="12" x2="4" y2="12"></line>
+                                            <line x1="20" y1="12" x2="22" y2="12"></line>
+                                            <line x1="4.93" y1="19.07" x2="6.34"  y2="17.66"></line>
+                                            <line x1="17.66" y1="6.34"  x2="19.07" y2="4.93"></line>
+                                        </svg>
+                                        <span data-i18n="settings.light">Light</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.accent_label">Accent color</div>
+                                    <div class="settings-row-desc" data-i18n="settings.accent_desc">Personalize the highlight color used across the site.</div>
+                                </div>
+                                <div class="accent-swatches" id="accent-swatches"></div>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.density_label">Display density</div>
+                                    <div class="settings-row-desc" data-i18n="settings.density_desc">How tightly rankings and lists are packed.</div>
+                                </div>
+                                <div class="seg-control" id="density-seg">
+                                    <button type="button" data-density-set="compact" data-i18n="settings.density_compact">Compact</button>
+                                    <button type="button" data-density-set="normal" data-i18n="settings.density_normal">Normal</button>
+                                    <button type="button" data-density-set="comfortable" data-i18n="settings.density_comfortable">Comfortable</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Profile photo -->
+                        <div id="profile" class="settings-section">
+                            <div class="settings-section-head">
+                                <h2 data-i18n="settings.profile_photo">Profile photo</h2>
+                                <p data-i18n="settings.profile_photo_desc">Upload a photo that will appear next to your name.</p>
+                            </div>
+                            <div id="profile-photo-content">
+                                <div class="loader" style="padding:16px 0;">Loading…</div>
+                            </div>
+                        </div>
+
+                        <!-- Notifications -->
+                        <div id="notifications" class="settings-section">
+                            <div class="settings-section-head">
+                                <h2 data-i18n="settings.notifications">Notifications</h2>
+                                <p data-i18n="settings.notifications_desc">Choose what MM.AI can remind you about (saved on this device).</p>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.notif_events_label">Event reminders</div>
+                                    <div class="settings-row-desc" data-i18n="settings.notif_events_desc">Show a banner when a saved event is about to start.</div>
+                                </div>
+                                <label class="settings-toggle-switch">
+                                    <input type="checkbox" id="notif-events" data-pref="notif_events">
+                                    <span class="settings-toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.notif_fighters_label">Favorite fighter updates</div>
+                                    <div class="settings-row-desc" data-i18n="settings.notif_fighters_desc">Notify when a favorited fighter has a new scheduled fight.</div>
+                                </div>
+                                <label class="settings-toggle-switch">
+                                    <input type="checkbox" id="notif-fighters" data-pref="notif_fighters">
+                                    <span class="settings-toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.notif_announce_label">MM.AI announcements</div>
+                                    <div class="settings-row-desc" data-i18n="settings.notif_announce_desc">Platform updates and new feature announcements.</div>
+                                </div>
+                                <label class="settings-toggle-switch">
+                                    <input type="checkbox" id="notif-announce" data-pref="notif_announce" checked>
+                                    <span class="settings-toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Privacy -->
+                        <div id="privacy" class="settings-section">
+                            <div class="settings-section-head">
+                                <h2 data-i18n="settings.privacy">Privacy</h2>
+                                <p data-i18n="settings.privacy_desc">Control your data and visibility preferences.</p>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.public_profile_label">Public profile</div>
+                                    <div class="settings-row-desc" data-i18n="settings.public_profile_desc">Allow other users to see your profile and favorites (coming soon).</div>
+                                </div>
+                                <label class="settings-toggle-switch">
+                                    <input type="checkbox" id="pref-public" data-pref="public_profile">
+                                    <span class="settings-toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-row">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.analytics_label">Analytics cookies</div>
+                                    <div class="settings-row-desc" data-i18n="settings.analytics_desc_priv">Allow anonymous usage analytics to help improve MM.AI.</div>
+                                </div>
+                                <label class="settings-toggle-switch">
+                                    <input type="checkbox" id="pref-analytics" data-pref="analytics_cookies" checked>
+                                    <span class="settings-toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="settings-row" style="margin-top:8px;">
+                                <div class="settings-row-text">
+                                    <div class="settings-row-label" data-i18n="settings.download_label">Download my data</div>
+                                    <div class="settings-row-desc" data-i18n="settings.download_desc">Export your favorites and account info as JSON.</div>
+                                </div>
+                                <button type="button" class="btn btn-ghost" id="export-data-btn" data-i18n="settings.export_btn">Export</button>
+                            </div>
+                        </div>
+
+                        <!-- Account — populated dynamically by JS below -->
+                        <div id="account" class="settings-section">
+                            <div class="settings-section-head">
+                                <h2 data-i18n="settings.account">Account</h2>
+                                <p id="account-section-desc" data-i18n="settings.account_mgmt_desc">Manage your MM.AI account.</p>
+                            </div>
+                            <div id="account-content">
+                                <div class="loader" style="padding:24px 0;">Loading…</div>
+                            </div>
+                        </div>
+
+                        <!-- About -->
+                        <div id="about" class="settings-section">
+                            <div class="settings-section-head">
+                                <h2 data-i18n="settings.about_title">About MM.AI</h2>
+                                <p data-i18n="settings.about_desc">A modern MMA analytics platform.</p>
+                            </div>
+                            <div class="settings-info" data-i18n="settings.about_body">
+                                <strong>MM.AI</strong> — MMA fight prediction engine combining a proprietary Elo,
+                                a Scouter Rating and verified public data sources.<br>
+                                See the <a href="methodology.html" style="color:var(--primary-2);">Methodology</a> page for details.
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">MM<span class="accent">.</span>AI</span>
+                <span class="footer-tag" data-i18n="footer.tagline">MMA analytics & fight prediction</span>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/kalmossa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" class="footer-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18.91-.25 1.89-.38 2.86-.38s1.95.13 2.86.38c2.18-1.49 3.14-1.18 3.14-1.18.62 1.58.23 2.75.11 3.04.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/elias-lallouet-7759a12b1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="footer-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.13 1.45-2.13 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43c-1.14 0-2.07-.93-2.07-2.07s.93-2.07 2.07-2.07 2.07.93 2.07 2.07-.93 2.07-2.07 2.07zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+                </a>
+            </div>
+            <div class="footer-meta">
+                <span data-i18n="footer.copyright">© 2026 MM.AI · All rights reserved</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        setupNavSearch();
+
+        // ---- Theme toggle (segmented control) ----
+        (function () {
+            const toggle = document.getElementById("theme-toggle");
+            if (!toggle) return;
+            const buttons = toggle.querySelectorAll("button[data-theme-set]");
+
+            const sync = () => {
+                const cur = window.MMAITheme ? window.MMAITheme.get() : "dark";
+                buttons.forEach(b => b.classList.toggle("active", b.dataset.themeSet === cur));
+            };
+            buttons.forEach(b => b.addEventListener("click", () => {
+                window.MMAITheme.set(b.dataset.themeSet);
+            }));
+            window.addEventListener("mmai:theme-change", sync);
+            sync();
+        })();
+
+        // ---- Sidebar nav: highlight on scroll / click ----
+        (function () {
+            const links = document.querySelectorAll(".settings-side a");
+            const sections = Array.from(links).map(a => document.querySelector(a.getAttribute("href")));
+            const setActive = (id) => {
+                links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
+            };
+            links.forEach(a => a.addEventListener("click", () => {
+                const id = a.getAttribute("href").slice(1);
+                setActive(id);
+            }));
+            // Sync on hash present at load
+            if (location.hash) {
+                const id = location.hash.slice(1);
+                if (document.getElementById(id)) setActive(id);
+            }
+        })();
+
+        // ---- Language selector ----
+        (function () {
+            const select = document.getElementById("lang-select");
+            if (!select) return;
+            select.value = window.MMAILang ? window.MMAILang.get() : "en";
+            select.addEventListener("change", () => {
+                if (window.MMAILang) window.MMAILang.set(select.value);
+            });
+            window.addEventListener("mmai:lang-change", () => {
+                select.value = window.MMAILang ? window.MMAILang.get() : "en";
+            });
+        })();
+
+        applyTranslations();
+
+        // ---- Account section (dynamic) ----
+        (function () {
+            const _esc = (s) => String(s || "").replace(/[<>&"']/g, c =>
+                ({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&#39;"}[c]));
+
+            function renderAccountSection() {
+                const container = document.getElementById("account-content");
+                if (!container) return;
+                const user = window.MMAIAuth ? window.MMAIAuth.currentUser() : null;
+
+                if (!user) {
+                    container.innerHTML = `
+                        <div class="settings-row">
+                            <div class="settings-row-text">
+                                <div class="settings-row-label">${t('settings.create_label')}</div>
+                                <div class="settings-row-desc">${t('settings.create_desc')}</div>
+                            </div>
+                            <a href="register.html" class="btn btn-primary">${t('nav.sign_up')}</a>
+                        </div>
+                        <div class="settings-row">
+                            <div class="settings-row-text">
+                                <div class="settings-row-label">${t('settings.login_label')}</div>
+                                <div class="settings-row-desc">${t('settings.login_desc')}</div>
+                            </div>
+                            <a href="login.html" class="btn btn-ghost">${t('nav.sign_in_btn')}</a>
+                        </div>`;
+                    return;
+                }
+
+                const pseudoLocked = !!user.pseudo_changed_at;
+                container.innerHTML = `
+                    <div class="settings-profile-info">
+                        <div class="settings-profile-avatar">${user.avatar_data ? `<img src="${_esc(user.avatar_data)}" alt="Avatar" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">` : _esc((user.first_name||"?")[0].toUpperCase())}</div>
+                        <div>
+                            <div class="settings-profile-name">${_esc(user.first_name + " " + user.last_name)}</div>
+                            <div class="settings-profile-email">${_esc(user.email)}</div>
+                            <span class="settings-profile-tier ${_esc(user.tier)}">${_esc((user.tier||"free").toUpperCase())}</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-row" style="margin-top:24px; align-items:flex-start;">
+                        <div class="settings-row-text">
+                            <div class="settings-row-label">${t('settings.username_label')}</div>
+                            <div class="settings-row-desc">@${_esc(user.pseudo)}</div>
+                            ${pseudoLocked ? `<div class="settings-row-desc" style="color:var(--text-dim);font-size:12px;margin-top:4px;">${t('settings.username_locked_hint')}</div>` : `<div class="settings-row-desc" style="color:var(--text-dim);font-size:12px;margin-top:4px;">${t('settings.username_change_hint')}</div>`}
+                        </div>
+                        <div id="pseudo-change-area">
+                            ${pseudoLocked
+                                ? `<span style="font-size:12px;color:var(--text-dim);">${t('settings.locked_text')}</span>`
+                                : `<button type="button" class="btn btn-ghost" id="pseudo-edit-btn">${t('settings.change_btn')}</button>`
+                            }
+                        </div>
+                    </div>
+
+                    <div id="pseudo-form-row" class="settings-row" style="display:none; flex-wrap:wrap; gap:8px; align-items:center;">
+                        <input type="text" id="pseudo-input" placeholder="new_username" maxlength="20"
+                               style="background:var(--bg-elev-3); border:1px solid var(--border); border-radius:8px;
+                                      padding:8px 12px; color:var(--text); font-family:inherit; font-size:14px; width:180px;">
+                        <div style="display:flex;gap:8px;">
+                            <button type="button" class="btn btn-primary" id="pseudo-save-btn" style="padding:8px 14px;">${t('settings.save_btn')}</button>
+                            <button type="button" class="btn btn-ghost" id="pseudo-cancel-btn" style="padding:8px 14px;">${t('settings.cancel_btn')}</button>
+                        </div>
+                        <div id="pseudo-error" style="width:100%;color:var(--primary-2);font-size:12px;display:none;"></div>
+                        <div id="pseudo-ok" style="width:100%;color:#22c55e;font-size:12px;display:none;"></div>
+                    </div>
+
+                    <div class="settings-row">
+                        <div class="settings-row-text">
+                            <div class="settings-row-label">${t('settings.password_label')}</div>
+                            <div class="settings-row-desc">${t('settings.password_reset_desc')}</div>
+                        </div>
+                        <a href="forgot-password.html" class="btn btn-ghost">${t('settings.reset_password_btn')}</a>
+                    </div>
+
+                    <hr style="border:none; border-top:1px solid var(--border); margin:32px 0 24px;">
+
+                    <div>
+                        <div class="settings-row-label" style="color:var(--primary-2);margin-bottom:12px;">${t('settings.danger_zone')}</div>
+                        <div class="settings-row">
+                            <div class="settings-row-text">
+                                <div class="settings-row-label">${t('settings.delete_label')}</div>
+                                <div class="settings-row-desc">${t('settings.delete_desc')}</div>
+                            </div>
+                            <button type="button" class="btn btn-danger" id="delete-account-btn">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:4px;">
+                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"></path>
+                                </svg>
+                                ${t('settings.delete_btn')}
+                            </button>
+                        </div>
+                        <div id="delete-confirm" style="display:none; margin-top:16px; padding:16px; background:rgba(210,10,17,0.08); border:1px solid rgba(210,10,17,0.3); border-radius:10px;">
+                            <p style="margin:0 0 12px; font-size:14px; color:var(--text);">${t('settings.delete_confirm_msg')}</p>
+                            <input type="password" id="delete-password" placeholder="Your password"
+                                   style="background:var(--bg-elev-3); border:1px solid var(--border); border-radius:8px;
+                                          padding:8px 12px; color:var(--text); font-family:inherit; font-size:14px; width:100%; margin-bottom:10px; box-sizing:border-box;">
+                            <div id="delete-error" style="color:var(--primary-2);font-size:12px;margin-bottom:10px;display:none;"></div>
+                            <div style="display:flex; gap:8px;">
+                                <button type="button" class="btn btn-danger" id="delete-confirm-btn">${t('settings.delete_yes_btn')}</button>
+                                <button type="button" class="btn btn-ghost" id="delete-cancel-btn">${t('settings.cancel_btn')}</button>
+                            </div>
+                        </div>
+                    </div>`;
+
+                // Wire pseudo change
+                const editBtn   = document.getElementById("pseudo-edit-btn");
+                const formRow   = document.getElementById("pseudo-form-row");
+                const saveBtn   = document.getElementById("pseudo-save-btn");
+                const cancelBtn = document.getElementById("pseudo-cancel-btn");
+                const errDiv    = document.getElementById("pseudo-error");
+                const okDiv     = document.getElementById("pseudo-ok");
+
+                if (editBtn) {
+                    editBtn.addEventListener("click", () => { formRow.style.display = "flex"; editBtn.style.display = "none"; });
+                }
+                if (cancelBtn) {
+                    cancelBtn.addEventListener("click", () => { formRow.style.display = "none"; if (editBtn) editBtn.style.display = ""; });
+                }
+                if (saveBtn) {
+                    saveBtn.addEventListener("click", async () => {
+                        const pseudo = (document.getElementById("pseudo-input").value || "").trim();
+                        errDiv.style.display = "none"; okDiv.style.display = "none";
+                        if (!/^[a-zA-Z0-9_]{3,20}$/.test(pseudo)) {
+                            errDiv.textContent = "3-20 chars, letters/digits/underscore only.";
+                            errDiv.style.display = "block"; return;
+                        }
+                        saveBtn.disabled = true; saveBtn.textContent = "Saving…";
+                        try {
+                            const resp = await window.MMAIAuth.authFetch("/api/auth/profile", {
+                                method: "PATCH",
+                                body: JSON.stringify({ pseudo }),
+                            });
+                            const body = await resp.json().catch(() => ({}));
+                            if (resp.ok) {
+                                okDiv.textContent = "Username updated!"; okDiv.style.display = "block";
+                                const cached = window.MMAIAuth.currentUser();
+                                if (cached) { cached.pseudo = pseudo; cached.pseudo_changed_at = new Date().toISOString(); window.MMAIAuth.setSession(null, cached); }
+                                setTimeout(() => renderAccountSection(), 1500);
+                            } else if (body.error === "pseudo_taken") {
+                                errDiv.textContent = "This username is already taken."; errDiv.style.display = "block";
+                            } else if (body.error === "pseudo_already_changed") {
+                                errDiv.textContent = "Username can only be changed once."; errDiv.style.display = "block";
+                            } else {
+                                errDiv.textContent = body.detail || "Error. Please try again."; errDiv.style.display = "block";
+                            }
+                        } catch { errDiv.textContent = "Network error."; errDiv.style.display = "block"; }
+                        finally { saveBtn.disabled = false; saveBtn.textContent = t('settings.save_btn'); }
+                    });
+                }
+
+                // Wire delete account
+                const delBtn     = document.getElementById("delete-account-btn");
+                const delConfirm = document.getElementById("delete-confirm");
+                const delConfBtn = document.getElementById("delete-confirm-btn");
+                const delCancel  = document.getElementById("delete-cancel-btn");
+                const delErr     = document.getElementById("delete-error");
+
+                if (delBtn) delBtn.addEventListener("click", () => { delConfirm.style.display = "block"; delBtn.style.display = "none"; });
+                if (delCancel) delCancel.addEventListener("click", () => { delConfirm.style.display = "none"; delBtn.style.display = ""; });
+                if (delConfBtn) {
+                    delConfBtn.addEventListener("click", async () => {
+                        const password = (document.getElementById("delete-password").value || "");
+                        delErr.style.display = "none";
+                        if (!password) { delErr.textContent = "Please enter your password."; delErr.style.display = "block"; return; }
+                        delConfBtn.disabled = true; delConfBtn.textContent = "Deleting…";
+                        try {
+                            const resp = await window.MMAIAuth.authFetch("/api/auth/me", {
+                                method: "DELETE",
+                                body: JSON.stringify({ password }),
+                            });
+                            if (resp.ok) {
+                                window.MMAIAuth.clearSession();
+                                location.href = "index.html";
+                            } else {
+                                const body = await resp.json().catch(() => ({}));
+                                if (body.error === "invalid_password") delErr.textContent = "Incorrect password.";
+                                else delErr.textContent = "Error. Please try again.";
+                                delErr.style.display = "block";
+                            }
+                        } catch { delErr.textContent = "Network error."; delErr.style.display = "block"; }
+                        finally { delConfBtn.disabled = false; delConfBtn.textContent = t('settings.delete_yes_btn'); }
+                    });
+                }
+            }
+
+            window.addEventListener("mmai:auth-change", renderAccountSection);
+            window.addEventListener("mmai:lang-change", renderAccountSection);
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", renderAccountSection);
+            } else {
+                renderAccountSection();
+            }
+        })();
+
+        // ---- Profile photo section -------------------------------------------
+        (function () {
+
+            // Compresse n'importe quelle image (même HEIC via canvas) en JPEG ~50KB
+            function compressAvatar(file) {
+                return new Promise((resolve, reject) => {
+                    const url = URL.createObjectURL(file);
+                    const img = new Image();
+                    img.onload = () => {
+                        URL.revokeObjectURL(url);
+                        const MAX_PX = 300;
+                        let w = img.width, h = img.height;
+                        if (w > MAX_PX || h > MAX_PX) {
+                            if (w >= h) { h = Math.round(h * MAX_PX / w); w = MAX_PX; }
+                            else        { w = Math.round(w * MAX_PX / h); h = MAX_PX; }
+                        }
+                        const canvas = document.createElement("canvas");
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+                        const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+                        if (dataUrl.length > 262144) { reject(new Error("still_too_large")); return; }
+                        resolve(dataUrl);
+                    };
+                    img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("load_failed")); };
+                    img.src = url;
+                });
+            }
+
+            function renderPhotoSection() {
+                const container = document.getElementById("profile-photo-content");
+                if (!container) return;
+                const user = window.MMAIAuth ? window.MMAIAuth.currentUser() : null;
+
+                if (!user) {
+                    container.innerHTML = `<p style="color:var(--text-dim); font-size:14px;">${t('settings.photo_signin')}</p>`;
+                    return;
+                }
+
+                const avatarSrc = user.avatar_data || null;
+                const initLetter = (user.first_name || user.pseudo || "?")[0].toUpperCase();
+                const previewContent = avatarSrc
+                    ? `<img src="${avatarSrc}" alt="Avatar">`
+                    : initLetter;
+
+                container.innerHTML = `
+                    <div class="settings-avatar-row">
+                        <div class="settings-avatar-preview" id="avatar-preview">${previewContent}</div>
+                        <div>
+                            <label for="avatar-file" class="btn btn-ghost" style="cursor:pointer;">${t('settings.choose_photo_btn')}</label>
+                            <input type="file" id="avatar-file" accept="image/*" style="display:none;">
+                            ${avatarSrc ? `<button type="button" class="btn btn-ghost" id="avatar-remove-btn" style="margin-left:8px; color:var(--primary-2);">${t('common.remove')}</button>` : ""}
+                            <div style="font-size:12px; color:var(--text-dim); margin-top:8px;">${t('settings.photo_format_hint')}</div>
+                            <div id="avatar-status" style="font-size:12px; margin-top:6px; display:none;"></div>
+                        </div>
+                    </div>`;
+
+                document.getElementById("avatar-file").addEventListener("change", async (e) => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    const statusEl = document.getElementById("avatar-status");
+
+                    statusEl.textContent = "Compressing…";
+                    statusEl.style.color = "var(--text-muted)";
+                    statusEl.style.display = "block";
+
+                    let dataUrl;
+                    try {
+                        dataUrl = await compressAvatar(file);
+                    } catch (err) {
+                        statusEl.textContent = err.message === "load_failed"
+                            ? "Format not supported by your browser. Try JPEG or PNG."
+                            : "Image too large even after compression.";
+                        statusEl.style.color = "var(--primary-2)";
+                        return;
+                    }
+
+                    document.getElementById("avatar-preview").innerHTML = `<img src="${dataUrl}" alt="Avatar">`;
+                    statusEl.textContent = "Saving…";
+
+                    try {
+                        const resp = await window.MMAIAuth.authFetch("/api/auth/avatar", {
+                            method: "PATCH",
+                            body: JSON.stringify({ avatar_data: dataUrl }),
+                        });
+                        if (resp.ok) {
+                            const cached = window.MMAIAuth.currentUser();
+                            if (cached) { cached.avatar_data = dataUrl; window.MMAIAuth.setSession(null, cached); }
+                            statusEl.textContent = "Photo saved!";
+                            statusEl.style.color = "var(--success)";
+                            setTimeout(() => renderPhotoSection(), 1500);
+                        } else {
+                            const body = await resp.json().catch(() => ({}));
+                            statusEl.textContent = body.detail || "Server error. Please try again later.";
+                            statusEl.style.color = "var(--primary-2)";
+                        }
+                    } catch {
+                        statusEl.textContent = "Network error.";
+                        statusEl.style.color = "var(--primary-2)";
+                    }
+                });
+
+                const removeBtn = document.getElementById("avatar-remove-btn");
+                if (removeBtn) {
+                    removeBtn.addEventListener("click", async () => {
+                        removeBtn.disabled = true;
+                        try {
+                            const resp = await window.MMAIAuth.authFetch("/api/auth/avatar", {
+                                method: "PATCH",
+                                body: JSON.stringify({ avatar_data: null }),
+                            });
+                            if (resp.ok) {
+                                const cached = window.MMAIAuth.currentUser();
+                                if (cached) { delete cached.avatar_data; window.MMAIAuth.setSession(null, cached); }
+                                renderPhotoSection();
+                            }
+                        } catch {}
+                        removeBtn.disabled = false;
+                    });
+                }
+            }
+
+            window.addEventListener("mmai:auth-change", renderPhotoSection);
+            window.addEventListener("mmai:lang-change", renderPhotoSection);
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", renderPhotoSection);
+            } else {
+                renderPhotoSection();
+            }
+        })();
+
+        // ---- Notification & privacy toggles (stored in localStorage) ---------
+        (function () {
+            const PREFS_KEY = "mmai-prefs";
+            const defaults = { notif_events: false, notif_fighters: false, notif_announce: true,
+                               public_profile: false, analytics_cookies: true };
+
+            function loadPrefs() {
+                try { return Object.assign({}, defaults, JSON.parse(localStorage.getItem(PREFS_KEY) || "{}")); } catch { return { ...defaults }; }
+            }
+            function savePrefs(prefs) {
+                try { localStorage.setItem(PREFS_KEY, JSON.stringify(prefs)); } catch {}
+            }
+
+            function syncToggles() {
+                const prefs = loadPrefs();
+                document.querySelectorAll("input[data-pref]").forEach(input => {
+                    input.checked = !!prefs[input.dataset.pref];
+                    input.addEventListener("change", () => {
+                        const p = loadPrefs();
+                        p[input.dataset.pref] = input.checked;
+                        savePrefs(p);
+                    });
+                });
+            }
+
+            if (document.readyState === "loading") {
+                document.addEventListener("DOMContentLoaded", syncToggles);
+            } else {
+                syncToggles();
+            }
+
+            // Export data
+            const exportBtn = document.getElementById("export-data-btn");
+            if (exportBtn) {
+                exportBtn.addEventListener("click", async () => {
+                    if (!window.MMAIAuth || !window.MMAIAuth.isLoggedIn()) {
+                        alert("Please sign in to export your data.");
+                        return;
+                    }
+                    exportBtn.disabled = true; exportBtn.textContent = "Exporting…";
+                    try {
+                        const [meResp, favResp] = await Promise.all([
+                            window.MMAIAuth.authFetch("/api/auth/me"),
+                            window.MMAIAuth.authFetch("/api/auth/favorites"),
+                        ]);
+                        const me = meResp.ok ? await meResp.json() : {};
+                        const favs = favResp.ok ? (await favResp.json()).favorites : [];
+                        delete me.id;
+                        const blob = new Blob([JSON.stringify({ account: me, favorites: favs }, null, 2)], { type: "application/json" });
+                        const a = document.createElement("a");
+                        a.href = URL.createObjectURL(blob);
+                        a.download = "mmai_data_export.json";
+                        a.click();
+                        URL.revokeObjectURL(a.href);
+                    } catch { alert("Export failed. Try again."); }
+                    exportBtn.disabled = false; exportBtn.textContent = "Export";
+                });
+            }
+        })();
+
+        // ---- Preferences UI : accent / densite / unites / division ----------
+        (function () {
+            if (!window.MMAIPrefs) return;
+
+            // Accent : on construit les pastilles depuis la palette exposee
+            const swatchWrap = document.getElementById("accent-swatches");
+            if (swatchWrap) {
+                const accents = window.MMAIPrefs.accents || {};
+                swatchWrap.innerHTML = Object.keys(accents).map(key => {
+                    const a = accents[key];
+                    return `<button type="button" class="accent-swatch" data-accent="${key}"
+                              title="${a.label}" aria-label="${a.label}" style="background:${a.p};"></button>`;
+                }).join("");
+                const syncAccent = () => {
+                    const cur = window.MMAIPrefs.get("accent");
+                    swatchWrap.querySelectorAll(".accent-swatch").forEach(b =>
+                        b.classList.toggle("active", b.dataset.accent === cur));
+                };
+                swatchWrap.querySelectorAll(".accent-swatch").forEach(b =>
+                    b.addEventListener("click", () => { window.MMAIPrefs.set("accent", b.dataset.accent); syncAccent(); }));
+                syncAccent();
+            }
+
+            // Densite (segmented)
+            const densitySeg = document.getElementById("density-seg");
+            if (densitySeg) {
+                const sync = () => {
+                    const cur = window.MMAIPrefs.get("density") || "normal";
+                    densitySeg.querySelectorAll("button").forEach(b =>
+                        b.classList.toggle("active", b.dataset.densitySet === cur));
+                };
+                densitySeg.querySelectorAll("button").forEach(b =>
+                    b.addEventListener("click", () => { window.MMAIPrefs.set("density", b.dataset.densitySet); sync(); }));
+                sync();
+            }
+
+            // Unites (segmented)
+            const unitsSeg = document.getElementById("units-seg");
+            if (unitsSeg) {
+                const sync = () => {
+                    const cur = window.MMAIPrefs.get("units") || "imperial";
+                    unitsSeg.querySelectorAll("button").forEach(b =>
+                        b.classList.toggle("active", b.dataset.unitsSet === cur));
+                };
+                unitsSeg.querySelectorAll("button").forEach(b =>
+                    b.addEventListener("click", () => { window.MMAIPrefs.set("units", b.dataset.unitsSet); sync(); }));
+                sync();
+            }
+
+        })();
+    </script>
+    <script src="js/demo-banner.js"></script>
+</body>
+</html>

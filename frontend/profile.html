@@ -1,0 +1,191 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Profile - MM.AI</title>
+    <script>(function(){try{if(localStorage.getItem("mmai-theme")==="light")document.documentElement.setAttribute("data-theme","light");}catch(e){}})();</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.5.0/css/flag-icons.min.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark"><span>M</span></span>
+                <span class="brand-text">MM<span class="dot">.</span>AI</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="rankings.html" data-i18n="nav.rankings">Rankings</a>
+                <a href="fighters.html" data-i18n="nav.fighters">Fighters</a>
+                <a href="divisions.html" data-i18n="nav.divisions">Divisions</a>
+                <a href="compare.html" data-i18n="nav.compare">Compare</a>
+                <a href="matchmaking.html" class="accent-link" data-i18n="nav.matchmaking">Matchmaking</a>
+                <a href="analytics.html" data-i18n="nav.analytics">Analytics</a>
+                <a href="methodology.html" data-i18n="nav.methodology">Methodology</a>
+                <a href="faq.html" data-i18n="nav.faq">FAQ</a>
+            </nav>
+            <div class="nav-search">
+                <input type="search" id="nav-search" placeholder="Search a fighter..." data-i18n-placeholder="nav.search" autocomplete="off">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div id="profile-page-root">
+            <div class="container" style="padding-top:48px;">
+                <div class="loader">Loading profile…</div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">MM<span class="accent">.</span>AI</span>
+                <span class="footer-tag" data-i18n="footer.tagline">MMA analytics & fight prediction</span>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/kalmossa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="footer-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18.91-.25 1.89-.38 2.86-.38s1.95.13 2.86.38c2.18-1.49 3.14-1.18 3.14-1.18.62 1.58.23 2.75.11 3.04.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+                </a>
+            </div>
+            <div class="footer-meta">
+                <span data-i18n="footer.copyright">© 2026 MM.AI · All rights reserved</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+    setupNavSearch();
+    applyTranslations();
+
+    const _esc = s => String(s||"").replace(/[<>&"']/g, c=>
+        ({"<":"&lt;",">":"&gt;","&":"&amp;",'"':"&quot;","'":"&#39;"}[c]));
+
+    async function renderProfilePage() {
+        const root = document.getElementById("profile-page-root");
+
+        if (!window.MMAIAuth || !window.MMAIAuth.isLoggedIn()) {
+            root.innerHTML = `
+                <div class="container" style="padding-top:48px; text-align:center;">
+                    <h2>You are not signed in</h2>
+                    <p style="color:var(--text-muted); margin:12px 0 24px;">Sign in to view your profile.</p>
+                    <a href="login.html?next=profile.html" class="btn btn-primary">Sign in</a>
+                </div>`;
+            return;
+        }
+
+        try {
+            const user = await window.MMAIAuth.refreshMe();
+            if (!user) throw new Error("Could not load profile");
+
+            // Fetch favorites count
+            let favCount = 0;
+            try {
+                const fr = await window.MMAIAuth.authFetch("/api/auth/favorites/ids");
+                if (fr.ok) { const d = await fr.json(); favCount = (d.ids || []).length; }
+            } catch {}
+
+            const avatarContent = user.avatar_data
+                ? `<img src="${_esc(user.avatar_data)}" alt="Avatar">`
+                : `<span>${_esc((user.first_name || user.pseudo || "?")[0].toUpperCase())}</span>`;
+
+            const memberSince = user.created_at
+                ? new Date(user.created_at).toLocaleDateString("en-US", { year: "numeric", month: "long" })
+                : null;
+
+            document.title = `${user.first_name || user.pseudo} – MM.AI`;
+
+            root.innerHTML = `
+                <div class="container">
+                    <div class="profile-page-hero">
+                        <div class="profile-page-avatar">${avatarContent}</div>
+                        <div class="profile-page-name">${_esc(user.first_name + " " + user.last_name)}</div>
+                        <div class="profile-page-pseudo">@${_esc(user.pseudo)}</div>
+                        <div class="profile-page-email">${_esc(user.email)}</div>
+                        <div class="profile-page-tier ${_esc(user.tier || "free")}">${_esc((user.tier||"free").toUpperCase())}</div>
+                        ${memberSince ? `<div class="profile-page-since">Member since ${memberSince}</div>` : ""}
+
+                        <div class="profile-page-stats">
+                            <div class="profile-page-stat">
+                                <div class="val">${favCount}</div>
+                                <div class="lbl">Favorites</div>
+                            </div>
+                        </div>
+
+                        <div class="profile-page-actions">
+                            <a href="favorites.html" class="btn btn-ghost">★ My favorites</a>
+                            <a href="settings.html#account" class="btn btn-ghost">Edit profile</a>
+                        </div>
+                    </div>
+
+                    <section class="section">
+                        <div class="section-head">
+                            <h2>★ Favorite fighters</h2>
+                            <a href="favorites.html" class="section-head-link">View all →</a>
+                        </div>
+                        <div id="profile-favs-list"><div class="loader">Loading…</div></div>
+                    </section>
+                </div>`;
+
+            // Load favorite fighters preview
+            loadProfileFavorites();
+
+        } catch (e) {
+            root.innerHTML = `<div class="container" style="padding-top:48px;"><div class="error-box">${_esc(e.message)}</div></div>`;
+        }
+    }
+
+    async function loadProfileFavorites() {
+        const el = document.getElementById("profile-favs-list");
+        if (!el) return;
+        try {
+            const resp = await window.MMAIAuth.authFetch("/api/auth/favorites");
+            if (!resp.ok) { el.innerHTML = ""; return; }
+            const data = await resp.json();
+            const favs = (data.favorites || []).slice(0, 8);
+            if (!favs.length) { el.innerHTML = `<p style="color:var(--text-dim); font-size:14px;">No favorites yet. <a href="fighters.html" style="color:var(--primary-2);">Browse fighters →</a></p>`; return; }
+            el.innerHTML = `<div class="fav-list-container">${favs.map(f => {
+                const photo = f.photo_thumbnail_url;
+                const initial = _esc((f.name||"?")[0].toUpperCase());
+                const photoContent = photo
+                    ? `<img src="${_esc(photo)}" alt="" loading="lazy" onerror="this.style.display='none'">`
+                    : `<span class="fav-list-initial">${initial}</span>`;
+                const w = f.record_total_wins || 0, l = f.record_total_losses || 0;
+                const flagHTML = typeof nationalityToFlagHTML === "function" ? nationalityToFlagHTML(f.nationality || "") : "";
+                const wc = _esc((typeof formatWeightClassLong === "function" ? formatWeightClassLong(f.weight_class_current, f.gender) : (f.weight_class_current || "")) || "");
+                return `<a href="fighter.html?id=${f.id}" class="fav-list-row">
+                    <div class="fav-list-photo">${photoContent}</div>
+                    <div class="fav-list-info">
+                        <div class="fav-list-name-row">
+                            <span class="fav-list-name">${_esc(f.name)}</span>
+                            ${flagHTML ? `<span class="fav-flag-inline">${flagHTML}</span>` : ""}
+                        </div>
+                        <div class="fav-list-cat">${wc}</div>
+                    </div>
+                    <div class="fav-list-record">${w}-${l}</div>
+                </a>`;
+            }).join("")}</div>`;
+        } catch { el.innerHTML = ""; }
+    }
+
+    renderProfilePage();
+    // On n'écoute PAS mmai:auth-change ici : refreshMe() le déclencherait
+    // → boucle infinie. On gère juste le logout : si déconnecté, redirect.
+    window.addEventListener("mmai:auth-change", () => {
+        if (!window.MMAIAuth.isLoggedIn()) location.href = "index.html";
+    });
+    </script>
+    <script src="js/demo-banner.js"></script>
+</body>
+</html>

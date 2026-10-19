@@ -1,0 +1,110 @@
+# ============================================================================
+# MM.AI - .gitignore
+# ============================================================================
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environnements virtuels
+venv/
+env/
+.venv/
+ENV/
+
+# Variables d'environnement (CREDENTIALS)
+.env
+.env.local
+.env.*.local
+
+# Données brutes et sorties scrapers (volumineuses, à ne pas versionner)
+data/raw/*
+data/exports/*
+data/processed/*
+data/scraper_output/fightmatrix/*
+data/scraper_output/tapology/*
+data/scraper_output/ufc_fr/*
+data/scraper_output/errors/*
+data/scraper_output/sources_map.*
+!data/raw/.gitkeep
+!data/exports/.gitkeep
+!data/processed/.gitkeep
+!data/scraper_output/fightmatrix/.gitkeep
+!data/scraper_output/tapology/.gitkeep
+!data/scraper_output/ufc_fr/.gitkeep
+!data/scraper_output/errors/.gitkeep
+
+# Temporaires / archives (ne pas versionner)
+_temp/
+debug/
+
+# Fichiers Office (ne pas versionner)
+*.xlsx
+*.xls
+
+# IDE / Éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Build / Distribution
+dist/
+build/
+*.tar.gz
+
+# Node (frontend futur)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+.next/
+.nuxt/
+
+# Bases de données locales
+*.sqlite
+*.sqlite3
+*.db
+
+# Backups
+*.bak
+*.backup
+
+# Profil Chrome Selenium (volumineux, 5+ Go)
+.chrome_profile/
+
+# Binaires (chromedriver, etc.)
+*.exe
+
+# Fichiers temporaires Office (verrouillage)
+~$*.docx
+~$*.pptx
+~$*.xlsx
+
+# Documents TFE (non versionnés en prod — cf CLAUDE.md)
+docs/*.docx
+docs/*.pptx
+docs/*.pdf
+
+# Documents perso / préparation oral (repo public — ne pas publier)
+/Presentation_MM_AI.pptx
+/Rapport_MM_AI_Elias_Lallouet.docx
+docs/ORAL_QUESTIONS_REPONSES.md
+docs/SCRIPT_DEMO_LIVE.md
+docs/SCRIPT_ORAL_COMPLET.md
+docs/SCRIPT_ORAL_UML_MERISE.md

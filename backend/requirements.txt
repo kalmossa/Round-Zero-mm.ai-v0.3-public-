@@ -1,0 +1,21 @@
+# MM.AI - Requirements
+
+# === ML / Calculs ===
+numpy>=1.24.0
+
+# === BDD PostgreSQL ===
+psycopg2-binary>=2.9.9
+python-dotenv>=1.0.0
+
+# === Data import / scraping ===
+openpyxl>=3.1.2          # Excel
+requests>=2.31.0         # HTTP scraping
+beautifulsoup4>=4.12.2   # HTML parsing
+
+# === Tests ===
+pytest>=7.4.0
+pytest-cov>=4.1.0
+
+# === Affichage console ===
+tabulate>=0.9.0
+colorama>=0.4.6

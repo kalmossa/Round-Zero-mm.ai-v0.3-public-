@@ -1,0 +1,304 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Methodology - MM.AI</title>
+    <script>(function(){try{if(localStorage.getItem("mmai-theme")==="light")document.documentElement.setAttribute("data-theme","light");}catch(e){}})();</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.5.0/css/flag-icons.min.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+</head>
+<body>
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark"><span>M</span></span>
+                <span class="brand-text">MM<span class="dot">.</span>AI</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="rankings.html" data-i18n="nav.rankings">Rankings</a>
+                <a href="fighters.html" data-i18n="nav.fighters">Fighters</a>
+                <a href="divisions.html" data-i18n="nav.divisions">Divisions</a>
+                <a href="compare.html" data-i18n="nav.compare">Compare</a>
+                <a href="matchmaking.html" class="accent-link" data-i18n="nav.matchmaking">Matchmaking</a>
+                <a href="analytics.html" data-i18n="nav.analytics">Analytics</a>
+                <a href="methodology.html" class="active" data-i18n="nav.methodology">Methodology</a>
+                <a href="faq.html" data-i18n="nav.faq">FAQ</a>
+            </nav>
+            <div class="nav-search">
+                <input type="search" id="nav-search" placeholder="Search a fighter..." data-i18n-placeholder="nav.search" autocomplete="off">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="section">
+                <div class="section-head">
+                    <h2 data-i18n="home.methodology_section">MM.AI Methodology</h2>
+                </div>
+                <p class="section-sub" data-i18n="methodo.page_sub">How MM.AI turns 30+ years of fight history into ratings and predictions — from raw data to machine learning.</p>
+
+                <!-- Stats banner -->
+                <div class="methodo-stats-banner">
+                    <div class="msb-item">
+                        <span class="msb-val">11 304</span>
+                        <span class="msb-label" data-i18n="analytics.kpi_fighters">fighters indexed</span>
+                    </div>
+                    <div class="msb-sep"></div>
+                    <div class="msb-item">
+                        <span class="msb-val">151 538</span>
+                        <span class="msb-label" data-i18n="analytics.kpi_fights">historical fights</span>
+                    </div>
+                    <div class="msb-sep"></div>
+                    <div class="msb-item">
+                        <span class="msb-val">4</span>
+                        <span class="msb-label" data-i18n="methodo.stat_sources">cross-referenced sources</span>
+                    </div>
+                    <div class="msb-sep"></div>
+                    <div class="msb-item">
+                        <span class="msb-val">30+</span>
+                        <span class="msb-label" data-i18n="methodo.stat_years">years of MMA data</span>
+                    </div>
+                    <div class="msb-sep"></div>
+                    <div class="msb-item">
+                        <span class="msb-val">30+</span>
+                        <span class="msb-label" data-i18n="methodo.stat_features">features per fighter</span>
+                    </div>
+                </div>
+
+                <!-- Philosophy -->
+                <div class="methodo-philosophy">
+                    <div class="mp-lead">
+                        <span class="mp-eyebrow" data-i18n="methodo.eyebrow">Our philosophy</span>
+                        <h3 data-i18n="methodo.lead_title">Machine learning in the service of the analyst</h3>
+                        <p data-i18n="methodo.lead_body">MM.AI does not replace the expert eye — it <strong>augments</strong> it. At its core is a machine learning pipeline that ingests over <strong>150 000 fights across 30+ years</strong>, extracts 30+ features per fighter, and trains on the full historical record to produce ratings and predictions that no human analyst could compute manually. We believe the strongest read on a fight emerges from the <strong>alliance of algorithmic rigour and human judgement</strong>: the machine never forgets a result, weighs thousands of careers without bias, and converges to a stable rating through <strong>iterative learning</strong>. That gives the human analyst the best possible starting point.</p>
+                    </div>
+
+                    <div class="mp-grid">
+                        <div class="mp-block">
+                            <div class="mp-icon">&#9654;</div>
+                            <h4 data-i18n="methodo.block1_title">Iterative convergence</h4>
+                            <p data-i18n="methodo.block1_body">Ratings are not computed once — the algorithm <strong>runs multiple passes</strong> over the entire fight history until all values stabilise. This fixed-point approach resolves circular dependencies (A beats B who beats C who beats A) through <strong>repeated learning</strong>, typically converging in 5–12 iterations.</p>
+                        </div>
+                        <div class="mp-block">
+                            <div class="mp-icon">&#9678;</div>
+                            <h4 data-i18n="methodo.block2_title">Explainable by design</h4>
+                            <p data-i18n="methodo.block2_body">No black box. Every output is traceable: an Elo update, a weighted feature combination, a logistic output. We favour a model a human can <strong>understand and challenge</strong> over one nobody can audit — every number has a formula behind it.</p>
+                        </div>
+                        <div class="mp-block">
+                            <div class="mp-icon">&#9888;</div>
+                            <h4 data-i18n="methodo.block3_title">Known limits</h4>
+                            <p data-i18n="methodo.block3_body">MM.AI does <strong>not</strong> model extra-sporting factors — weight cuts, injury, motivation, camp changes. These can decide a night and remain the expert's call. The model is a <strong>prior</strong>, not a verdict.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cards -->
+                <div class="methodo-grid">
+
+                    <!-- 01 -->
+                    <article class="methodo-card">
+                        <div class="methodo-num">01</div>
+                        <h3 data-i18n="methodo.c1_title">Iterative Elo — fixed-point learning</h3>
+                        <p data-i18n="methodo.c1_intro">Inspired by chess Elo and adapted to MMA, our algorithm replays all <strong>151 538 fights in chronological order</strong>, updating every fighter's rating after each bout.</p>
+                        <div class="methodo-concept">
+                            <div class="mc-formula"><span class="var">Rating</span> <span class="op">←</span> <span class="var">Rating</span> <span class="op">+</span> K <span class="op">·</span> ( actual <span class="op">−</span> expected )</div>
+                            <div class="mc-chips">
+                                <span class="mc-chip">K <strong>adapts to experience</strong></span>
+                                <span class="mc-chip">weighted by <strong>finish quality</strong></span>
+                                <span class="mc-chip"><strong>bounded</strong> to prevent drift</span>
+                            </div>
+                        </div>
+                        <p data-i18n="methodo.c1_body">Because each fighter's rating depends on their opponents' ratings, the entire pass is <strong>repeated 5–12 times</strong> until the maximum per-fighter change drops below 0.5 — a fixed-point convergence that self-corrects circular dependencies across the full graph of 11 000+ fighters.</p>
+                        <ul>
+                            <li data-i18n="methodo.c1_li1">Seeded from <strong>external rating points</strong> (log-transform calibration)</li>
+                            <li data-i18n="methodo.c1_li2">Per-division rescaling to <strong>[600 – 2800]</strong> after convergence</li>
+                            <li data-i18n="methodo.c1_li3">Opponent tier fallback for <strong>32% of bouts</strong> with unknown opponents</li>
+                        </ul>
+                    </article>
+
+                    <!-- 02 -->
+                    <article class="methodo-card">
+                        <div class="methodo-num">02</div>
+                        <h3 data-i18n="methodo.c2_title">Scouter Rating — composite ML score</h3>
+                        <p data-i18n="methodo.c2_intro">A single <strong>0–100 score</strong> aggregating four independent feature groups, each capturing a different dimension of fighter quality.</p>
+                        <div class="weight-bar">
+                            <span class="ws elo"    style="width:35%">35% Elo</span>
+                            <span class="ws career" style="width:30%">30% Career</span>
+                            <span class="ws ext"    style="width:20%">20% External</span>
+                            <span class="ws skills" style="width:15%">15% Skills</span>
+                        </div>
+                        <ul style="margin-top:14px;">
+                            <li data-i18n="methodo.c2_li1"><strong>Elo component</strong> — base_elo normalised to 0-100 per division</li>
+                            <li data-i18n="methodo.c2_li2"><strong>Career component</strong> — win %, finish %, title reigns, title defenses, streak</li>
+                            <li data-i18n="methodo.c2_li3"><strong>External component</strong> — aggregated public rating metrics and quality %</li>
+                            <li data-i18n="methodo.c2_li4"><strong>Skills component</strong> — striking accuracy, grappling, takedown defense (UFC Stats)</li>
+                        </ul>
+                        <div class="callout" data-i18n="methodo.c2_callout" style="margin-top:14px;">
+                            All four components are normalised and min-max scaled before weighting, ensuring no single source dominates due to scale differences.
+                        </div>
+                    </article>
+
+                    <!-- 03 -->
+                    <article class="methodo-card">
+                        <div class="methodo-num">03</div>
+                        <h3 data-i18n="methodo.c3_title">Feature engineering</h3>
+                        <p data-i18n="methodo.c3_intro">Each fighter is represented as a <strong>30+ dimensional feature vector</strong> extracted from their full fight history and multi-source profile.</p>
+                        <div class="mc-fam">
+                            <div class="mc-fam-item"><div class="fam-h">Ratings</div><div class="fam-d">Elo & composite quality scores</div></div>
+                            <div class="mc-fam-item"><div class="fam-h">Form & momentum</div><div class="fam-d">recency-weighted recent results</div></div>
+                            <div class="mc-fam-item"><div class="fam-h">Career</div><div class="fam-d">win & finish rates, title history</div></div>
+                            <div class="mc-fam-item"><div class="fam-h">Physical</div><div class="fam-d">age, height, reach, stance</div></div>
+                            <div class="mc-fam-item"><div class="fam-h">Striking / grappling</div><div class="fam-d">accuracy & defensive metrics</div></div>
+                        </div>
+                        <p data-i18n="methodo.c3_body">Features are recomputed at every scrape cycle. The <strong>recent_form_score</strong> applies exponentially increasing weights to the last 5 fights, making the model responsive to momentum without overfitting on a single result.</p>
+                    </article>
+
+                    <!-- 04 -->
+                    <article class="methodo-card">
+                        <div class="methodo-num">04</div>
+                        <h3 data-i18n="methodo.c4_title">Data sources — multi-source fusion</h3>
+                        <p data-i18n="methodo.c4_intro">Four independent sources are cross-referenced per fighter to eliminate single-platform bias and maximise coverage.</p>
+                        <div class="source-grid">
+                            <div class="source">
+                                <div class="source-name">External rating DB</div>
+                                <div class="source-desc" data-i18n="methodo.c4_s1_desc">Career rating points, quality performance %, Big League Record — authoritative across all promotions since 1993</div>
+                            </div>
+                            <div class="source">
+                                <div class="source-name">Official UFC</div>
+                                <div class="source-desc" data-i18n="methodo.c4_s2_desc">Division rankings, P4P list, champion status, UFC-only record, nationality, stance</div>
+                            </div>
+                            <div class="source">
+                                <div class="source-name">UFC Stats</div>
+                                <div class="source-desc" data-i18n="methodo.c4_s3_desc">Per-fight striking, grappling, control time, takedown defense — granular per-round breakdown</div>
+                            </div>
+                            <div class="source">
+                                <div class="source-name">Tapology</div>
+                                <div class="source-desc" data-i18n="methodo.c4_s4_desc">Full fight history with dates, methods, opponent records at fight time — used for form and chronological Elo replay</div>
+                            </div>
+                        </div>
+                        <p data-i18n="methodo.c4_note" style="margin-top:12px; font-size:13px; color:var(--text-dim);">Anti-duplicate matching normalises names (accents, apostrophes) and cross-references date of birth to merge profiles across sources without creating ghost fighters.</p>
+                    </article>
+
+                    <!-- 05 – span 2 -->
+                    <article class="methodo-card span-2">
+                        <div class="methodo-num">05</div>
+                        <h3 data-i18n="methodo.c5_title">ML prediction engine — comparing two fighters</h3>
+                        <p data-i18n="methodo.c5_intro">Given fighters A and B, MM.AI computes a <strong>dynamic Elo</strong> for each by applying four real-time modifiers to their base rating, then feeds the difference into a <strong>logistic regression</strong> to output a win probability.</p>
+
+                        <div class="methodo-predict-split">
+                            <div>
+                                <p data-i18n="methodo.c5_step1_lbl" style="font-size:13px; color:var(--text-dim); margin-bottom:8px;">Step 1 — Dynamic Elo (live modifiers)</p>
+                                <div class="methodo-concept">
+                                    <div class="mc-formula"><span class="var">dyn Elo</span> <span class="op">=</span> <span class="var">base Elo</span> <span class="op">×</span> live modifiers</div>
+                                    <div class="mc-chips">
+                                        <span class="mc-chip"><strong>Age</strong> curve</span>
+                                        <span class="mc-chip"><strong>Recent form</strong></span>
+                                        <span class="mc-chip"><strong>Opposition</strong> strength</span>
+                                        <span class="mc-chip"><strong>Inactivity</strong> decay</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p data-i18n="methodo.c5_step2_lbl" style="font-size:13px; color:var(--text-dim); margin-bottom:8px;">Step 2 — Logistic prediction</p>
+                                <div class="methodo-concept">
+                                    <div class="mc-formula"><span class="var">P(A wins)</span> <span class="op">=</span> σ ( Σ wᵢ <span class="op">·</span> Δfeatureᵢ )</div>
+                                    <div class="mc-chips">
+                                        <span class="mc-chip"><strong>logistic</strong> on feature gaps</span>
+                                        <span class="mc-chip">weights <strong>learned</strong>, not hand-set</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <p data-i18n="methodo.c5_body">The predicted <strong>win method</strong> (KO/TKO, submission, decision) is derived from the winner's historical finish distribution weighted by their opponent's defensive stats. A high finish rate against a poor grappling defender raises the submission probability, etc.</p>
+
+                        <div class="methodo-train-row">
+                            <div class="mtr-block">
+                                <span class="mtr-label" data-i18n="methodo.c5_train_lbl">Training set</span>
+                                <span class="mtr-val" data-i18n="methodo.c5_train_val">All fights before 2023</span>
+                            </div>
+                            <div class="mtr-arrow">→</div>
+                            <div class="mtr-block">
+                                <span class="mtr-label" data-i18n="methodo.c5_val_lbl">Validation</span>
+                                <span class="mtr-val" data-i18n="methodo.c5_val_val">Walk-forward (no future leak)</span>
+                            </div>
+                            <div class="mtr-arrow">→</div>
+                            <div class="mtr-block">
+                                <span class="mtr-label" data-i18n="methodo.c5_eval_lbl">Evaluation</span>
+                                <span class="mtr-val" data-i18n="methodo.c5_eval_val">Accuracy, log-loss, Brier score</span>
+                            </div>
+                            <div class="mtr-arrow">→</div>
+                            <div class="mtr-block">
+                                <span class="mtr-label" data-i18n="methodo.c5_out_lbl">Output</span>
+                                <span class="mtr-val" data-i18n="methodo.c5_out_val">P(win), method, style breakdown</span>
+                            </div>
+                        </div>
+
+                        <div class="callout" data-i18n="methodo.c5_callout">
+                            The walk-forward backtest replays every fight in chronological order — MM.AI predicts each bout using <em>only data available before that date</em>, then learns the real result. No peeking at the future, no overfitting on the answers.
+                        </div>
+                    </article>
+
+                </div>
+
+                <!-- Track record -->
+                <div class="track-record" id="track-record">
+                    <div class="tr-head">
+                        <span class="mp-eyebrow" data-i18n="track.eyebrow">Does it actually work?</span>
+                        <h3 data-i18n="track.title">Track record — honest backtest</h3>
+                        <p class="tr-intro" data-i18n="track.intro">
+                            We replayed every fight in our database in chronological order. For each one,
+                            MM.AI predicts the winner using <strong>only the data available before that fight</strong>,
+                            then learns the real result — exactly how a live forecaster would operate.
+                            No peeking at the future, no fitting on the answers. Here is what came out.
+                        </p>
+                    </div>
+                    <div id="tr-body">
+                        <div class="loader" style="padding:40px;">Loading…</div>
+                    </div>
+                </div>
+
+                <div class="methodo-cta">
+                    <p data-i18n="methodo.cta">Still have a question about how MM.AI works — or what it deliberately leaves out?</p>
+                    <a class="btn btn-primary" href="faq.html" data-i18n="methodo.cta_btn">Read the FAQ →</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <span class="footer-logo">MM<span class="accent">.</span>AI</span>
+                <span class="footer-tag" data-i18n="footer.tagline">MMA analytics & fight prediction</span>
+            </div>
+            <div class="footer-social">
+                <a href="https://github.com/kalmossa" target="_blank" rel="noopener noreferrer" aria-label="GitHub" title="GitHub" class="footer-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.32-1.27-1.67-1.27-1.67-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.18 1.76 1.18 1.02 1.75 2.68 1.25 3.34.96.1-.74.4-1.25.73-1.54-2.56-.29-5.25-1.28-5.25-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .96-.31 3.15 1.18.91-.25 1.89-.38 2.86-.38s1.95.13 2.86.38c2.18-1.49 3.14-1.18 3.14-1.18.62 1.58.23 2.75.11 3.04.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.41-5.25 5.69.41.36.78 1.07.78 2.16v3.2c0 .31.21.67.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/></svg>
+                </a>
+                <a href="https://www.linkedin.com/in/elias-lallouet-7759a12b1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn" class="footer-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.85 0-2.13 1.45-2.13 2.94v5.66H9.36V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43c-1.14 0-2.07-.93-2.07-2.07s.93-2.07 2.07-2.07 2.07.93 2.07 2.07-.93 2.07-2.07 2.07zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+                </a>
+            </div>
+            <div class="footer-meta">
+                <span data-i18n="footer.copyright">© 2026 MM.AI · All rights reserved</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/methodology.js"></script>
+    <script>setupNavSearch(); applyTranslations(); renderTrackRecord();</script>
+    <script src="js/demo-banner.js"></script>
+</body>
+</html>

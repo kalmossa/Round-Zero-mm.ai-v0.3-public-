@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin - MM.AI</title>
+    <script>(function(){try{if(localStorage.getItem("mmai-theme")==="light")document.documentElement.setAttribute("data-theme","light");}catch(e){}})();</script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <style>
+    /* -- Panel admin : styles scopes (page interne, pas dans style.css) -- */
+    .adm-wrap { max-width: 1180px; margin: 0 auto; padding: 32px 20px 80px; }
+    .adm-head { display:flex; align-items:center; gap:12px; margin-bottom:6px; }
+    .adm-head h1 { font-family:"Oswald",sans-serif; font-size:28px; margin:0; letter-spacing:.5px; }
+    .adm-badge { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+        background:linear-gradient(135deg,#7c3aed,#06b6d4); color:#fff; padding:3px 9px; border-radius:6px; }
+    .adm-sub { color:var(--text-muted,#9aa); font-size:13px; margin:0 0 22px; }
+
+    .adm-tabs { display:flex; gap:6px; flex-wrap:wrap; border-bottom:1px solid var(--border,#262b36);
+        margin-bottom:24px; }
+    .adm-tab { background:none; border:none; color:var(--text-muted,#9aa); font-size:14px; font-weight:600;
+        padding:11px 16px; cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+    .adm-tab:hover { color:var(--text,#e8eaed); }
+    .adm-tab.active { color:var(--primary-2,#06b6d4); border-bottom-color:var(--primary-2,#06b6d4); }
+
+    .adm-cards { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px; margin-bottom:26px; }
+    .adm-card { background:var(--surface,#161a22); border:1px solid var(--border,#262b36); border-radius:12px; padding:16px; }
+    .adm-card .v { font-family:"Oswald",sans-serif; font-size:28px; font-weight:700; line-height:1; }
+    .adm-card .l { color:var(--text-muted,#9aa); font-size:12px; text-transform:uppercase; letter-spacing:.6px; margin-top:6px; }
+    .adm-card.accent .v { color:var(--primary-2,#06b6d4); }
+    .adm-card.warn .v { color:#f59e0b; }
+
+    .adm-section-title { font-family:"Oswald",sans-serif; font-size:16px; letter-spacing:.5px; margin:26px 0 12px;
+        color:var(--text,#e8eaed); text-transform:uppercase; }
+
+    .adm-toolbar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:16px; }
+    .adm-input, .adm-select { background:var(--surface,#161a22); border:1px solid var(--border,#262b36);
+        color:var(--text,#e8eaed); border-radius:8px; padding:9px 12px; font-size:14px; }
+    .adm-input { min-width:240px; }
+
+    .adm-table-wrap { overflow-x:auto; border:1px solid var(--border,#262b36); border-radius:12px; }
+    table.adm-table { width:100%; border-collapse:collapse; font-size:13.5px; }
+    table.adm-table th { text-align:left; padding:11px 14px; color:var(--text-muted,#9aa);
+        font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:.5px;
+        background:var(--surface-2,#11151c); border-bottom:1px solid var(--border,#262b36); white-space:nowrap; }
+    table.adm-table td { padding:10px 14px; border-bottom:1px solid var(--border,#1e232c); vertical-align:middle; }
+    table.adm-table tr:last-child td { border-bottom:none; }
+    table.adm-table tr:hover td { background:rgba(255,255,255,.02); }
+
+    .adm-pill { display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:20px;
+        text-transform:uppercase; letter-spacing:.5px; }
+    .adm-pill.premium { background:rgba(124,58,237,.18); color:#a78bfa; }
+    .adm-pill.free { background:rgba(148,163,184,.15); color:#94a3b8; }
+    .adm-pill.open { background:rgba(245,158,11,.16); color:#f59e0b; }
+    .adm-pill.resolved { background:rgba(34,197,94,.16); color:#22c55e; }
+    .adm-pill.yes { background:rgba(34,197,94,.16); color:#22c55e; }
+    .adm-pill.no  { background:rgba(148,163,184,.15); color:#94a3b8; }
+    .adm-pill.adminflag { background:linear-gradient(135deg,#7c3aed,#06b6d4); color:#fff; }
+
+    .adm-btn { background:var(--surface,#161a22); border:1px solid var(--border,#262b36); color:var(--text,#e8eaed);
+        border-radius:8px; padding:7px 13px; font-size:13px; font-weight:600; cursor:pointer; }
+    .adm-btn:hover { border-color:var(--primary-2,#06b6d4); }
+    .adm-btn.primary { background:linear-gradient(135deg,#7c3aed,#06b6d4); border:none; color:#fff; }
+    .adm-btn.sm { padding:5px 10px; font-size:12px; }
+    .adm-btn:disabled { opacity:.5; cursor:not-allowed; }
+
+    .adm-thumb { width:34px; height:34px; border-radius:7px; object-fit:cover; background:var(--surface-2,#11151c);
+        display:inline-flex; align-items:center; justify-content:center; font-weight:700; color:var(--text-muted,#9aa); }
+
+    .adm-pager { display:flex; gap:8px; align-items:center; justify-content:center; margin-top:18px; color:var(--text-muted,#9aa); font-size:13px; }
+
+    .adm-empty { text-align:center; color:var(--text-muted,#9aa); padding:48px 20px; }
+    .adm-loader { text-align:center; color:var(--text-muted,#9aa); padding:40px; }
+    .adm-error { background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.3); color:#f87171;
+        padding:14px 16px; border-radius:10px; font-size:14px; }
+
+    /* Drawer d'edition fighter */
+    .adm-overlay { position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:90; display:none; }
+    .adm-overlay.show { display:block; }
+    .adm-drawer { position:fixed; top:0; right:0; height:100%; width:min(560px,100%); z-index:91;
+        background:var(--bg,#0c0f14); border-left:1px solid var(--border,#262b36); transform:translateX(100%);
+        transition:transform .22s ease; overflow-y:auto; box-shadow:-20px 0 60px rgba(0,0,0,.4); }
+    .adm-drawer.show { transform:translateX(0); }
+    .adm-drawer-head { display:flex; align-items:center; justify-content:space-between; padding:18px 22px;
+        border-bottom:1px solid var(--border,#262b36); position:sticky; top:0; background:var(--bg,#0c0f14); z-index:2; }
+    .adm-drawer-head h3 { margin:0; font-family:"Oswald",sans-serif; font-size:19px; }
+    .adm-drawer-body { padding:20px 22px 40px; }
+    .adm-x { background:none; border:none; color:var(--text-muted,#9aa); font-size:24px; cursor:pointer; line-height:1; }
+    .adm-grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px 16px; }
+    .adm-field { display:flex; flex-direction:column; gap:5px; }
+    .adm-field.full { grid-column:1 / -1; }
+    .adm-field label { font-size:11px; text-transform:uppercase; letter-spacing:.5px; color:var(--text-muted,#9aa); font-weight:600; }
+    .adm-field input, .adm-field select, .adm-field textarea {
+        background:var(--surface,#161a22); border:1px solid var(--border,#262b36); color:var(--text,#e8eaed);
+        border-radius:8px; padding:9px 11px; font-size:13.5px; font-family:inherit; width:100%; }
+    .adm-field textarea { resize:vertical; min-height:64px; }
+    .adm-fieldset-title { grid-column:1/-1; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.6px;
+        color:var(--primary-2,#06b6d4); margin:14px 0 -2px; }
+    .adm-drawer-foot { position:sticky; bottom:0; background:var(--bg,#0c0f14); border-top:1px solid var(--border,#262b36);
+        padding:14px 22px; display:flex; gap:10px; justify-content:flex-end; }
+    .adm-save-msg { font-size:13px; align-self:center; margin-right:auto; }
+    .adm-save-msg.ok { color:#22c55e; } .adm-save-msg.err { color:#f87171; }
+    @media (max-width:560px){ .adm-grid2{grid-template-columns:1fr;} }
+
+    /* Portail 2FA (enrolement + code) */
+    .adm-gate { max-width:1180px; margin:0 auto; padding:60px 20px; display:flex; justify-content:center; }
+    .adm-gate-card { width:100%; max-width:420px; text-align:center; background:var(--surface,#161a22);
+        border:1px solid var(--border,#262b36); border-radius:16px; padding:34px 30px; }
+    .adm-gate-card h2 { font-family:"Oswald",sans-serif; font-size:22px; margin:0 0 8px; }
+    .adm-gate-sub { color:var(--text-muted,#9aa); font-size:13.5px; line-height:1.5; margin:0 0 16px; }
+    .adm-qr { background:#fff; border-radius:12px; padding:14px; width:200px; height:200px; margin:6px auto 12px;
+        display:flex; align-items:center; justify-content:center; }
+    .adm-qr svg { width:100%; height:100%; display:block; }
+    .adm-secret { font-family:"JetBrains Mono",monospace; font-size:14px; letter-spacing:1px; word-break:break-all;
+        background:var(--surface-2,#11151c); border:1px solid var(--border,#262b36); border-radius:8px;
+        padding:9px 12px; margin:0 0 18px; color:var(--primary-2,#06b6d4); }
+    .adm-code-input { width:100%; text-align:center; font-family:"JetBrains Mono",monospace; font-size:30px;
+        letter-spacing:10px; padding:12px 0; margin-bottom:14px; background:var(--surface-2,#11151c);
+        border:1px solid var(--border,#262b36); border-radius:10px; color:var(--text,#e8eaed); }
+    .adm-gate-card .adm-btn.primary { width:100%; padding:11px; font-size:15px; }
+    .adm-gate-msg { min-height:18px; font-size:13px; margin-top:12px; }
+    .adm-gate-msg.err { color:#f87171; }
+    </style>
+</head>
+<body>
+    <!-- meme barre de nav que le reste du site (page interne, mais on garde la coherence visuelle) -->
+    <header class="navbar">
+        <div class="container nav-inner">
+            <a class="brand" href="index.html">
+                <span class="brand-mark"><span>M</span></span>
+                <span class="brand-text">MM<span class="dot">.</span>AI</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" data-i18n="nav.home">Home</a>
+                <a href="rankings.html" data-i18n="nav.rankings">Rankings</a>
+                <a href="fighters.html" data-i18n="nav.fighters">Fighters</a>
+                <a href="divisions.html" data-i18n="nav.divisions">Divisions</a>
+                <a href="matchmaking.html" class="accent-link" data-i18n="nav.matchmaking">Matchmaking</a>
+                <a href="analytics.html" data-i18n="nav.analytics">Analytics</a>
+            </nav>
+            <div class="nav-search">
+                <input type="search" id="nav-search" placeholder="Search a fighter..." data-i18n-placeholder="nav.search" autocomplete="off">
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- point de montage : admin.js remplit tout ici (portail 2FA puis panel) -->
+        <div id="admin-root">
+            <div class="adm-wrap"><div class="adm-loader">Checking access…</div></div>
+        </div>
+    </main>
+
+    <!-- Drawer d'edition fighter (cache par defaut) -->
+    <div class="adm-overlay" id="adm-overlay"></div>
+    <aside class="adm-drawer" id="adm-drawer" aria-hidden="true">
+        <div class="adm-drawer-head">
+            <h3 id="adm-drawer-title">Edit fighter</h3>
+            <button type="button" class="adm-x" id="adm-drawer-close">&times;</button>
+        </div>
+        <div class="adm-drawer-body" id="adm-drawer-body"></div>
+        <div class="adm-drawer-foot">
+            <span class="adm-save-msg" id="adm-save-msg"></span>
+            <button type="button" class="adm-btn" id="adm-drawer-cancel">Cancel</button>
+            <button type="button" class="adm-btn primary" id="adm-drawer-save">Save changes</button>
+        </div>
+    </aside>
+
+    <!-- i18n + auth + api + helpers communs, puis le module du panel admin -->
+    <script src="js/i18n.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/admin.js"></script>
+    <script>
+        // au chargement : barre de recherche + traductions + demarrage du panel (verif acces)
+        if (typeof setupNavSearch === "function") setupNavSearch();
+        if (typeof applyTranslations === "function") applyTranslations();
+        AdminPanel.init();
+    </script>
+    <script src="js/demo-banner.js"></script>
+</body>
+</html>
