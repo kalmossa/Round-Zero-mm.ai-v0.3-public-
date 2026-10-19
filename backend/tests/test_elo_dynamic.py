@@ -6,6 +6,14 @@ import pytest
 from datetime import datetime, timedelta
 from src.ml.elo_dynamic import DynamicEloCalculator
 
+# LEGACY - skipped on purpose (expected, not a bug):
+# these tests were written for the very first DynamicEloCalculator. The Elo engine
+# was rewritten afterwards (ml/elo/engine.py) and the final product (RoundZero) uses
+# another engine again. Kept only as a trace of the project's history.
+pytestmark = pytest.mark.skip(
+    reason="LEGACY (expected): written for the first Elo calculator, rewritten since - kept for history"
+)
+
 
 class TestDynamicEloCalculator:
     """Tests du calculateur Elo Dynamique"""

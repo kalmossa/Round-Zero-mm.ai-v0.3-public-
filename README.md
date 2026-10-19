@@ -1,49 +1,78 @@
-# MM.AI v0.3 — MMA analytics & fight prediction (early showcase)
+# MM.AI v0.3 — MMA analytics & fight prediction
 
-> **⚠️ This is the first version of the project, published as a showcase for curious people.**
-> The predictions, ratings (Elo, Scouter) and matchmaking logic in this repository are
-> **simplified early versions — they are NOT the real algorithms.**
-> The real engine lives in the final product, **RoundZero** (the site and the app), and is not open source.
+**Who wins tonight?** MM.AI rates every MMA fighter and predicts fights from their full career —
+UFC, PFL, Bellator, ONE and regional circuits — with an Elo engine, a 0–100 *Scouter* rating
+and a *Dragon Ball Z* power-level reveal. 🟣
 
-MM.AI was my final-year project: a platform that rates MMA fighters and estimates the outcome of a
-fight from their full career record, across UFC, PFL, Bellator, ONE and regional promotions.
-It later became **RoundZero**. This repo freezes the original MM.AI, *Dragon Ball Z* references included.
+> [!NOTE]
+> This is **v0.3, the first version** of the project, kept public as a showcase.
+> The ratings and predictions in this repo are **early, simplified algorithms — not the real ones.**
+> The project grew into **RoundZero** (website + app), which runs a completely new engine (not open source).
+> 👉 [See RoundZero below](#-what-it-became-roundzero)
+
+<p align="center">
+  <a href="docs/media/mmai-dbz-demo.mp4">
+    <img src="docs/media/mmai-dbz-demo.gif" width="85%" alt="MM.AI demo: scouter scan, DBZ power-level duel, then the prediction">
+  </a>
+  <br><sub>Matchmaking Makhachev vs Topuria: scouter scan → power-level duel → prediction, then "Calculate Scouter" on a fighter page.</sub>
+</p>
+
+## Highlights
+
+- **~11,300 fighters / ~151,000 fights** indexed from several cross-checked public sources (data not included, see below)
+- **Elo engine** replaying each fighter's whole fight history, weighting opponents by the level of the promotion
+- **Scouter rating (0–100)**: a single score for a fighter's current level, with DBZ tiers from *Earthling* to *Legendary*
+- **Matchmaking**: win probability, likely method & round, tale of the tape, factor breakdown, style matchup
+- **AI-written fight analysis** with a reliability gauge (Gemini / OpenRouter / Groq, with a no-AI fallback)
+- Rankings, divisions, P4P, events, analytics, fighter comparison
+- Accounts (JWT, email verification, favorites), **admin panel with 2FA**, **8 languages**, dark/light theme
 
 <p align="center">
   <img src="docs/screenshots/site_accueil.png" width="48%" alt="Home page">
   <img src="docs/screenshots/site_fiche.png" width="48%" alt="Fighter page">
 </p>
 
-## What's in it
-
-- **Rankings, fighters, divisions, events** pages with filters, search and a full fighter profile
-- **Elo rating** replayed from each fighter's fight history (v0.3 engine)
-- **Scouter rating (0–100)** — a single score for a fighter's current level, revealed in the
-  matchmaking page with a *Dragon Ball Z "power level"* scouter animation 🟣
-- **Compare** two fighters and **Matchmaking**: win probability, tale of the tape, factor breakdown
-- Optional **LLM-written analysis** of a matchup with a reliability score (Gemini / OpenRouter / Groq, with a no-AI fallback)
-- Accounts (JWT, email verification, favorites), admin panel with 2FA, 8 languages, dark/light theme
-
 ## Stack
 
-PostgreSQL · Python (Flask API serving a vanilla HTML/CSS/JS frontend) · FastAPI sandbox (Swagger) · no frontend framework.
+| Layer    | Tech |
+|----------|------|
+| Database | PostgreSQL (Supabase in production) |
+| Backend  | Python · Flask (public API + static server) · FastAPI sandbox (Swagger) · psycopg2 |
+| ML       | Elo engine, Scouter rating, skills & matchup predictor, backtesting — plain Python / NumPy |
+| Frontend | Vanilla HTML / CSS / JS, no framework, i18n in 8 languages |
+| AI layer | LLM API (Gemini by default) — writes the explanation, never makes the prediction |
 
 ```
 api/        Flask API + static file server (entry point: api/app.py)
-backend/    FastAPI sandbox + ML code (elo, scouter, skills, matchup predictor)
-database/   PostgreSQL schema, migrations, batch scripts
+backend/    FastAPI sandbox + ML code (backend/src/ml: elo, scouter, skills, matchup predictor)
+database/   PostgreSQL schema, migrations, batch rating scripts
 frontend/   HTML / CSS / JS pages
-docs/       screenshots
+docs/       screenshots and demo media
 ```
+
+The data collection side lives in its own repo: [mma-scraper](https://github.com/kalmossa/mma-scraper).
+
+## 🚀 What it became: RoundZero
+
+MM.AI was my final-year project. I kept building it, and it became **RoundZero**: new prediction
+engine, new design, community games (daily mystery fighter, overrated/underrated…) and a mobile app.
+RoundZero is not open source — this repo is where it all started.
+
+<p align="center">
+  <a href="docs/media/roundzero-teaser.mp4">
+    <img src="docs/media/roundzero-teaser.gif" width="85%" alt="RoundZero teaser">
+  </a>
+  <br><sub>RoundZero teaser (work in progress). Click for the full video with sound.</sub>
+</p>
 
 ## About the data
 
-**This repository contains no fighter data.** The original database was filled by scraping public
-sources and lived on Supabase; that data is not mine to redistribute, so it is not included.
-The site is therefore **empty if you run it as is**: you would need your own PostgreSQL database
-and your own data. The screenshots above show what it looked like with data.
+**This repository contains no fighter data.** The original database was built by scraping public
+sources and lived on Supabase; that data is not mine to redistribute. If you run the site as is,
+it will be **empty** — you would need your own PostgreSQL database and data.
+The demo above was recorded on the original database.
 
-What you *can* run without any data is the FastAPI sandbox, which falls back to 3 built-in sample fighters.
+What runs without any data is the FastAPI sandbox, which falls back to 3 built-in sample fighters.
 
 ## Running it
 
@@ -65,11 +94,23 @@ cp .env.example .env                             # fill in your database setting
 python api/app.py                                # → http://localhost:5000
 ```
 
-Every page shows a banner reminding visitors that this is the v0.3 showcase, and the prediction
-endpoints return a `demo_notice` field saying the same.
+**Tests:**
+
+```bash
+pip install pytest numpy
+pytest backend/tests -rs
+```
+
+> `test_elo_dynamic.py` is **skipped on purpose**: it was written for the very first Elo calculator,
+> which was rewritten afterwards. It is kept as a trace of the project's history, so seeing it as
+> *skipped* is expected, not a bug.
+
+Every page of the site shows a banner reminding visitors that this is the v0.3 showcase, and the
+prediction endpoints return a `demo_notice` field saying the same.
 
 ## Credits & disclaimers
 
 - Not affiliated with the UFC or any promotion. Fighter names and photos belong to their owners.
 - The *Dragon Ball Z* GIFs and images are fan references; they belong to their respective rights holders.
+- RoundZero teaser photos: credits are shown at the end of the video.
 - Author: [Elias Lallouet](https://github.com/kalmossa)
