@@ -11,15 +11,15 @@ and a *Dragon Ball Z* power-level reveal. 🟣
 > 👉 [See RoundZero below](#-what-it-became-roundzero)
 
 <p align="center">
-  <a href="docs/media/mmai-dbz-demo.mp4">
-    <img src="docs/media/mmai-dbz-demo.gif" width="85%" alt="MM.AI demo: scouter scan, DBZ power-level duel, then the prediction">
+  <a href="docs/media/mmai-v03-promo.mp4">
+    <img src="docs/media/mmai-v03-promo.gif" width="85%" alt="MM.AI v0.3: Topuria's scouter reading, then the Topuria vs Ferguson power-level duel">
   </a>
-  <br><sub>Matchmaking Makhachev vs Topuria: scouter scan → power-level duel → prediction, then "Calculate Scouter" on a fighter page.</sub>
+  <br><sub>▶ Click for the full video with sound (34 s): Topuria's fighter page → "Calculate Scouter" → Topuria vs Ferguson, Legendary vs Frieza level → the prediction and its data. Recorded on the real site.</sub>
 </p>
 
 ## Highlights
 
-- **~11,300 fighters / ~151,000 fights** indexed from several cross-checked public sources (data not included, see below)
+- **~11,300 fighters / ~151,000 fights** when MM.AI was built — the same database now holds **50,000+ fighters**, which is what the video runs on (data not included, see below)
 - **Elo engine** replaying each fighter's whole fight history, weighting opponents by the level of the promotion
 - **Scouter rating (0–100)**: a single score for a fighter's current level, with DBZ tiers from *Earthling* to *Legendary*
 - **Matchmaking**: win probability, likely method & round, tale of the tape, factor breakdown, style matchup
@@ -70,7 +70,7 @@ RoundZero is not open source — this repo is where it all started.
 **This repository contains no fighter data.** The original database was built by scraping public
 sources and lived on Supabase; that data is not mine to redistribute. If you run the site as is,
 it will be **empty** — you would need your own PostgreSQL database and data.
-The demo above was recorded on the original database.
+The video above was recorded with this exact code running on the original database (read-only).
 
 What runs without any data is the FastAPI sandbox, which falls back to 3 built-in sample fighters.
 
@@ -111,6 +111,6 @@ prediction endpoints return a `demo_notice` field saying the same.
 ## Credits & disclaimers
 
 - Not affiliated with the UFC or any promotion. Fighter names and photos belong to their owners.
-- The *Dragon Ball Z* GIFs and images are fan references; they belong to their respective rights holders.
+- The *Dragon Ball Z* GIFs, images and the scouter sound used by the site are fan references; they belong to their respective rights holders.
 - RoundZero teaser photos: credits are shown at the end of the video.
 - Author: [Elias Lallouet](https://github.com/kalmossa)
